@@ -33,12 +33,23 @@ export async function GET(
   try {
     results = await new Promise((resolve, reject) => {
       aggregator.fetchAll$(spot.latitude, spot.longitude).subscribe({
+          
+        /*next: (data) => {
+            // 🔍 Captura JSON real
+            console.log('[DEBUG] JSON completo:', JSON.stringify(data, null, 2));
+            resolve(data);
+          },
+          error: reject,
+        });
+        */
+        
         next: (data) => {
           console.log(`[${spotId}] Providers completados:`, data.length);
           resolve(data);
         },
         error: (err) => reject(err),
       });
+      
     });
   } catch (err) {
     console.error(`[${spotId}] Fetch falló:`, err);
